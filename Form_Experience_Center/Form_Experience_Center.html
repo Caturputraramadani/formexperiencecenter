@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Ijin Masuk Experience Center Room</title>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 18px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .full-width {
+            grid-column: span 2;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        button {
+            flex: 1;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #resetBtn {
+            background-color: #e74c3c;
+        }
+        #resetBtn:hover {
+            background-color: #c0392b;
+        }
+        #downloadBtn {
+            background-color: #2ecc71;
+        }
+        #downloadBtn:hover {
+            background-color: #27ae60;
+        }
+        .required {
+            color: red;
+        }
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+            font-weight: 500;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Booking Experience Center Room</h1>
+            <p class="subtitle">Silakan isi form berikut untuk mengajukan ijin masuk</p>
+        </div>
+        
+        <form id="experienceCenterForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap <span class="required">*</span></label>
+                    <input type="text" id="nama" name="nama" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="perusahaan">Perusahaan <span class="required">*</span></label>
+                    <input type="text" id="perusahaan" name="perusahaan" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jabatan">Jabatan</label>
+                    <input type="text" id="jabatan" name="jabatan">
+                </div>
+                
+                <div class="form-group">
+                    <label for="telepon">No. Telepon <span class="required">*</span></label>
+                    <input type="tel" id="telepon" name="telepon" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tujuan">Tujuan Kunjungan <span class="required">*</span></label>
+                    <select id="tujuan" name="tujuan" required>
+                        <option value="">-- Pilih Tujuan --</option>
+                        <option value="Demo Produk">Demo Produk</option>
+                        <option value="Meeting">Meeting</option>
+                        <option value="Pelatihan">Pelatihan</option>
+                        <option value="Event">Event</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tanggal">Tanggal Kunjungan <span class="required">*</span></label>
+                    <input type="date" id="tanggal" name="tanggal" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="waktu">Waktu Kunjungan <span class="required">*</span></label>
+                    <input type="time" id="waktu" name="waktu" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="peserta">Jumlah Peserta <span class="required">*</span></label>
+                    <input type="number" id="peserta" name="peserta" min="1" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="keterangan">Keterangan Tambahan</label>
+                    <textarea id="keterangan" name="keterangan" rows="4" placeholder="Jelaskan detail kunjungan atau kebutuhan khusus lainnya"></textarea>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button type="submit">Simpan Data</button>
+                <button type="button" id="resetBtn">Reset Form</button>
+                <button type="button" id="downloadBtn">Download Excel</button>
+            </div>
+        </form>
+        
+        <div id="successMessage" class="message success">
+            Data berhasil disimpan! Semua data tersimpan dalam satu file Excel.
+        </div>
+        
+        <div id="errorMessage" class="message error">
+            Terjadi kesalahan. Harap periksa kembali form Anda.
+        </div>
+        
+        <div id="infoMessage" class="message info">
+            Data akan ditambahkan ke file Excel yang sama.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('experienceCenterForm');
+            const resetBtn = document.getElementById('resetBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const infoMessage = document.getElementById('infoMessage');
+            
+            // Set tanggal minimal ke hari ini
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('tanggal').setAttribute('min', today);
+            
+            // Tampilkan info message
+            infoMessage.style.display = 'block';
+            setTimeout(() => {
+                infoMessage.style.display = 'none';
+            }, 5000);
+            
+            // Reset form
+            resetBtn.addEventListener('click', function() {
+                form.reset();
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+            });
+            
+            // Download Excel
+            downloadBtn.addEventListener('click', function() {
+                downloadExcel();
+            });
+            
+            // Submit form
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    const formData = {
+                        timestamp: new Date().toLocaleString('id-ID'),
+                        nama: document.getElementById('nama').value,
+                        perusahaan: document.getElementById('perusahaan').value,
+                        jabatan: document.getElementById('jabatan').value,
+                        telepon: document.getElementById('telepon').value,
+                        email: document.getElementById('email').value,
+                        tujuan: document.getElementById('tujuan').value,
+                        tanggalKunjungan: document.getElementById('tanggal').value,
+                        waktuKunjungan: document.getElementById('waktu').value,
+                        jumlahPeserta: document.getElementById('peserta').value,
+                        keterangan: document.getElementById('keterangan').value
+                    };
+                    
+                    saveToExcel(formData);
+                    
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                } else {
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 5000);
+                }
+            });
+            
+            function validateForm() {
+                let isValid = true;
+                const inputs = form.querySelectorAll('input[required], select[required]');
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.style.borderColor = '#e74c3c';
+                    } else {
+                        input.style.borderColor = '#ddd';
+                    }
+                });
+                
+                // Validasi email
+                const email = document.getElementById('email');
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (email.value && !emailPattern.test(email.value)) {
+                    isValid = false;
+                    email.style.borderColor = '#e74c3c';
+                }
+                
+                return isValid;
+            }
+            
+            function getExistingData() {
+                const dataJSON = localStorage.getItem('experienceCenterData');
+                return dataJSON ? JSON.parse(dataJSON) : [];
+            }
+            
+            function saveToExcel(data) {
+                // Ambil data yang sudah ada
+                const existingData = getExistingData();
+                
+                // Tambahkan data baru
+                existingData.push(data);
+                
+                // Simpan ke localStorage
+                localStorage.setItem('experienceCenterData', JSON.stringify(existingData));
+                
+                // Buat workbook
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.json_to_sheet(existingData);
+                
+                // Tambahkan worksheet ke workbook
+                XLSX.utils.book_append_sheet(wb, ws, "Data Pengunjung");
+                
+                // Simpan ke file (opsional, bisa juga hanya disimpan di localStorage)
+                // XLSX.writeFile(wb, "Data_Pengunjung_Experience_Center.xlsx");
+            }
+            
+            function downloadExcel() {
+                const existingData = getExistingData();
+                
+                if (existingData.length === 0) {
+                    alert("Tidak ada data yang dapat didownload.");
+                    return;
+                }
+                
+                // Buat workbook
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.json_to_sheet(existingData);
+                
+                // Tambahkan worksheet ke workbook
+                XLSX.utils.book_append_sheet(wb, ws, "Data Pengunjung");
+                
+                // Download file
+                XLSX.writeFile(wb, "Data_Pengunjung_Experience_Center.xlsx");
+            }
+        });
+    </script>
+</body>
+</html>
